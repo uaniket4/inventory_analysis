@@ -37,22 +37,6 @@ The scripts work with the actual CSV headers found in the dataset, including:
 - `pandas`
 - `matplotlib`
 
-## How to run
-
-Run the analysis first so the chart images are created, then generate the report:
-
-```bash
-python analysis.py
-python report.py
-```
-
-On Windows, if you want to use the environment already configured for this workspace, you can run:
-
-```powershell
-C:/Users/aniket/AppData/Local/Python/pythoncore-3.14-64/python.exe analysis.py
-C:/Users/aniket/AppData/Local/Python/pythoncore-3.14-64/python.exe report.py
-```
-
 ## Generated outputs
 
 Running the scripts creates these files in `output/`:
