@@ -90,22 +90,25 @@ def create_insights_page(pdf: PdfPages) -> None:
     frame["Inventory Turnover"] = frame["Number of products sold"] / frame["Stock levels"].where(frame["Stock levels"].ne(0))
     frame["Procurement Cost per Unit"] = frame["Manufacturing costs"] / frame["Order quantities"].where(frame["Order quantities"].ne(0))
 
+    procurement_by_supplier = frame.groupby("Supplier name").agg({"Manufacturing costs": "sum", "Order quantities": "sum"})
+    procurement_cost_per_unit_by_supplier = procurement_by_supplier["Manufacturing costs"] / procurement_by_supplier["Order quantities"]
     average_turnover = frame["Inventory Turnover"].mean(skipna=True)
     slow_moving_count = frame["Inventory Turnover"].lt(average_turnover).sum()
+
+    supplier_4_cost = procurement_cost_per_unit_by_supplier.loc["Supplier 4"]
+    supplier_4_lead_time = frame.loc[frame["Supplier name"] == "Supplier 4", "Lead times"].mean()
+    supplier_1_defect_rate = frame.loc[frame["Supplier name"] == "Supplier 1", "Defect rates"].mean()
+    supplier_1_cost = procurement_cost_per_unit_by_supplier.loc["Supplier 1"]
     highest_turnover_sku = frame.sort_values("Inventory Turnover", ascending=False)["SKU"].iloc[0]
-    highest_defect_supplier = frame.groupby("Supplier name")["Defect rates"].mean().sort_values(ascending=False).index[0]
-    procurement_by_supplier = frame.groupby("Supplier name").agg({"Manufacturing costs": "sum", "Order quantities": "sum"})
-    highest_procurement_supplier = (
-        procurement_by_supplier["Manufacturing costs"] / procurement_by_supplier["Order quantities"]
-    ).sort_values(ascending=False).index[0]
+    skincare_order_quantity = frame.loc[frame["Product type"] == "skincare", "Order quantities"].sum()
+    stock_by_product_type = frame.groupby("Product type")["Stock levels"].sum().sort_values(ascending=False)
 
     insights = [
-        f"• Average inventory turnover: {average_turnover:,.2f}",
-        f"• Slow-moving products below average turnover: {int(slow_moving_count):,}",
-        f"• Highest-turnover product: {highest_turnover_sku}",
-        f"• Supplier with the highest average defect rate: {highest_defect_supplier}",
-        f"• Supplier with the highest procurement cost per unit: {highest_procurement_supplier}",
-        "• Review the slow-moving SKUs first when planning replenishment or markdown actions.",
+        f"• Supplier 4 has the highest procurement cost per unit ({supplier_4_cost:,.2f}) and the longest lead time ({supplier_4_lead_time:,.0f} days), making it the weakest value-for-money supplier.",
+        f"• Supplier 1 is the best performing supplier, with the lowest defect rate ({supplier_1_defect_rate:,.2f}%) and a competitive procurement cost per unit ({supplier_1_cost:,.2f}).",
+        f"• {highest_turnover_sku} has an abnormally high inventory turnover of {frame.loc[frame['SKU'] == highest_turnover_sku, 'Inventory Turnover'].iloc[0]:,.0f}, indicating a potential anomaly or an extremely fast-moving item.",
+        f"• {int(slow_moving_count):,} SKUs are slow-moving, with turnover below average, which suggests overstocking risk and tied-up capital.",
+        f"• Skincare has the highest order quantity ({skincare_order_quantity:,}), while stock levels remain relatively similar across categories ({', '.join(f'{index}: {value:,}' for index, value in stock_by_product_type.items())}).",
     ]
 
     fig = plt.figure(figsize=(11, 8.5))
