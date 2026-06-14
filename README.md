@@ -49,6 +49,44 @@ Running the scripts creates these files in `output/`:
 - `06_slow_moving_inventory.png`
 - `Inventory_Report.pdf`
 
+## Screenshots
+
+### 1. Stock Levels by Product Type
+
+![Stock Levels by Product Type](output/01_stock_levels_by_product_type.png)
+
+This chart shows the total stock held for each product type so you can quickly compare inventory distribution across categories.
+
+### 2. Supplier Performance
+
+![Supplier Performance](output/02_supplier_performance.png)
+
+This grouped bar chart compares average lead times and defect rates for each supplier to highlight operational consistency.
+
+### 3. Inventory Turnover by Product
+
+![Inventory Turnover by Product](output/03_inventory_turnover_by_product.png)
+
+This chart ranks the top 15 SKUs by inventory turnover so the fastest-moving products stand out immediately.
+
+### 4. Procurement Cost Analysis
+
+![Procurement Cost Analysis](output/04_procurement_cost_analysis.png)
+
+This chart shows manufacturing cost per unit by supplier to help identify the most and least cost-efficient sourcing options.
+
+### 5. Order Quantity Trends by Product Type
+
+![Order Quantity Trends by Product Type](output/05_order_quantity_trends_by_product_type.png)
+
+This chart compares total order quantities across product types to reveal where demand is strongest.
+
+### 6. Slow Moving Inventory
+
+![Slow Moving Inventory](output/06_slow_moving_inventory.png)
+
+This chart highlights SKUs with below-average inventory turnover in red so slow-moving stock is easy to spot.
+
 ## Notes
 
 - The analysis script prints a short summary to the console after chart generation.
