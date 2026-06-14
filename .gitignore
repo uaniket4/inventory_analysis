@@ -1,0 +1,7 @@
+# Ignore virtual environments and generated analysis outputs.
+.venv/
+output/
+
+# Ignore Python bytecode and cache directories.
+__pycache__/
+*.pyc
