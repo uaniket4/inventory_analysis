@@ -47,6 +47,7 @@ Running the scripts creates these files in `output/`:
 - `04_procurement_cost_analysis.png`
 - `05_order_quantity_trends_by_product_type.png`
 - `06_slow_moving_inventory.png`
+- `image.png`
 - `Inventory_Report.pdf`
 
 ## Screenshots
@@ -86,6 +87,12 @@ This chart compares total order quantities across product types to reveal where 
 ![Slow Moving Inventory](output/06_slow_moving_inventory.png)
 
 This chart highlights SKUs with below-average inventory turnover in red so slow-moving stock is easy to spot.
+
+### 7. Inventory & Procurement Analytics Dashboard
+
+![Inventory & Procurement Analytics Dashboard](output/image.png)
+
+This is a summary dashboard view that brings the key tables and visuals together on one sheet for a quick executive-style overview.
 
 ## Notes
 
